@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 100 # stay under the agent's 2h hard reset
     steps:
-      - uses: prateek-stepsecurity/harden-runner@int
+      - uses: prateek-stepsecurity/harden-runner@non-tls
         with:
           egress-policy: audit
     
