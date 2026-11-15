@@ -1,0 +1,23 @@
+name: Secure Registry community defaults
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  secure-registry-community:
+    name: secure-registry-community
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Harden Runner
+        # rc-49 contains secure-registry; main does not yet expose this input.
+        uses: step-security/harden-runner@193b0f9f4c9e119f96a54940eebaec986cc46a0a
+        with:
+          egress-policy: audit
+          secure-registry: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify allowed download and both default protections
+        run: python3 scripts/secure-registry-community.py
